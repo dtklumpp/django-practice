@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3>show page</h3>
+
+GAME: {{ game }} <br>
+GENRE: {{ game.genre }} <br>
+PLAYERS: {{ game.players }} <br>
+<a href="/games/edit/{{game.id}}">Edit</a>
+<br>
+
+{% endblock %}
