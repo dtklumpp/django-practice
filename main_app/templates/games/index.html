@@ -8,7 +8,24 @@
                 <a href="show/{{game.id}}">
                     {{ game }}                
                 </a>
+                <form action="/games/delete/{{game.id}}" method="post">
+                    {% csrf_token %}
+                    <input type="submit" value="delete">
+                </form>
+                <br>
             </li>
         {% endfor %}
     </ul>
+
+    <br>
+
+    <h3>or add a game:</h3>
+
+    <form action="/games/create" method="post">
+        {% csrf_token %}
+        {{ game_form.as_p }}
+        <input type="submit" value="Add Game">        
+    </form>
+
+
 {% endblock %}
