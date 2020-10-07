@@ -27,8 +27,10 @@ def games_create(request):
 
 def games_show(request, game_id):
     game = Game.objects.get(id=game_id)
+    person_form = Person_Form()
     context = {
         "game": game,
+        "person_form": person_form,
     }
     return render(request, 'games/show.html', context)
 
@@ -51,3 +53,20 @@ def games_delete(request, game_id):
     game = Game.objects.get(id=game_id)
     game.delete()
     return redirect('/games/')
+
+def people_create(request, game_id):
+    if request.method == "POST":
+        person_form = Person_Form(request.POST)
+        if person_form.is_valid():
+            new_person = person_form.save()
+            game = Game.objects.get(id=game_id)
+            game.people.add(new_person)
+            game.save()
+    return redirect('/games/show/'+str(game_id))
+
+def people_remove(request, person_id, game_id):
+    game = Game.objects.get(id=game_id)
+    person = Person.objects.get(id=person_id)
+    game.people.remove(person)
+    return redirect('games-show', game_id=game_id)
+    

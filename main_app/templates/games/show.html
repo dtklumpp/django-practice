@@ -6,7 +6,23 @@
 GAME: {{ game }} <br>
 GENRE: {{ game.genre }} <br>
 PLAYERS: {{ game.players }} <br>
+Persons: 
+    <ul>
+    {% for person in game.people.all %}
+        <li>
+            {{ person }}
+            <a href="/people/remove/{{person.id}}/{{game.id}}">remove</a>
+            <br>
+        </li>
+    {% endfor %}    
+    </ul>
 <a href="/games/edit/{{game.id}}">Edit</a>
 <br>
+<h3>or add a person:</h3>
+<form action="/people/create/{{game.id}}" method="post">
+    {% csrf_token %}
+    {{ person_form.as_p }}
+    <input type="submit" value="entice person">
+</form>
 
 {% endblock %}
